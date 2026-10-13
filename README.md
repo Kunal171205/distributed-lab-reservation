@@ -29,7 +29,41 @@ The current mutex implementation has a 10-second wait timeout and can enter the 
 
 ---
 
-## Getting Started
+## Running with Docker (Recommended for New PC / Clean Setup)
+
+You only need **Docker Desktop** installed on your new PC (no Python or Node.js required on the host system).
+
+### 1. Clone the Repository
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd distributed-lab-reservation
+```
+
+### 2. Start all Services
+Run Docker Compose in detached mode with build:
+```bash
+docker compose up -d --build
+```
+This builds and launches:
+- `db` (PostgreSQL 15 on port 5432)
+- `rabbitmq` (RabbitMQ broker on port 5672, management UI on 15672)
+- `node-a`, `node-b`, `node-c` (FastAPI backend nodes on ports 8001, 8002, 8003)
+- `gateway` (FastAPI API Gateway on port 8000)
+- `frontend` (React + Vite SPA on port 3000)
+
+### 3. Seed Database
+Once all containers are running (wait ~10-15 seconds for PostgreSQL and nodes to be ready), run:
+```bash
+docker compose exec node-a python seed_data.py
+```
+
+### 4. Access the Application
+Open your browser and visit:
+👉 **http://localhost:3000**
+
+---
+
+## Running Locally (Without Docker)
 
 To run this project locally on Windows WITHOUT Docker, ensure you have:
 * **Python 3.10+**

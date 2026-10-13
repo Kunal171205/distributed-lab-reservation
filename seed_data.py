@@ -2,7 +2,11 @@ import sys
 import os
 import datetime
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "node_service", "app"))
+app_dir = os.path.join(os.path.dirname(__file__), "node_service", "app")
+if os.path.exists(app_dir):
+    sys.path.insert(0, app_dir)
+else:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from persistence.database import engine, SessionLocal
 from persistence import models
